@@ -47,17 +47,40 @@ ARU_Auth/
 
 Daftar aplikasi dan origin dikelola di `scripts/build-realm.py`.
 
-## Deploy di VPS
+## Deployment VPS
 
-Direkomendasikan di `/opt/apps/aru-auth`.
+GitHub digunakan sebagai source of truth, tetapi deployment ke VPS dilakukan **manual**.
+
+Target:
+
+```text
+/opt/apps/aru-auth
+```
+
+Deploy pertama:
 
 ```bash
-sudo mkdir -p /opt/apps/aru-auth
+sudo mkdir -p /opt/apps
+cd /opt/apps
+sudo git clone https://github.com/RioBithub/ARU_Auth.git aru-auth
 sudo chown -R $USER:$USER /opt/apps/aru-auth
 cd /opt/apps/aru-auth
+chmod +x scripts/*.sh scripts/*.py
 ./scripts/generate-env.sh
 ./scripts/deploy.sh
 ```
+
+Update berikutnya:
+
+```bash
+cd /opt/apps/aru-auth
+./scripts/backup.sh
+git pull origin main
+chmod +x scripts/*.sh scripts/*.py
+./scripts/deploy.sh
+```
+
+`.env`, database, dan backup tidak disimpan di GitHub.
 
 Keycloak hanya bind ke `127.0.0.1:8180`, sehingga port 8180 tidak perlu dibuka di UFW/iptables. Public traffic harus melewati Nginx/Hestia pada port 443.
 
@@ -125,12 +148,10 @@ Backup PostgreSQL ditaruh di `backups/` dan folder tersebut di-ignore Git.
 ## Rollout
 
 Urutan aman:
-1. Deploy `auth.aruraharja.co.id`.
+1. Deploy `auth.aruraharja.co.id` secara manual di VPS.
 2. Uji register, pending approval, login, logout, reset password.
 3. Integrasikan satu aplikasi pilot (disarankan Link/Meet).
 4. Setelah stabil, lanjut Ticketing, QRSign, VHC, kemudian SIAP.
 5. Login lokal existing tetap dipertahankan selama transisi.
 
-## GitHub → VPS
-
-Workflow tersedia di `.github/workflows/deploy.yml` dan saat ini menggunakan **manual workflow dispatch** agar tidak mencoba deployment sebelum secret VPS tersedia. Panduan secret dan deployment ada di `docs/DEPLOY_VPS.md`.
+Panduan deployment manual lebih lengkap ada di `docs/DEPLOY_VPS.md`.
