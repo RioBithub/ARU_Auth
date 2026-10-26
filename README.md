@@ -23,16 +23,29 @@ Central identity service untuk seluruh aplikasi internal PT Aru Raharja tanpa me
 ```text
 ARU_Auth/
 ├── config/
-│   ├── aru-realm.json
 │   └── user-profile.json
 ├── themes/aru/login/
 ├── nginx/
 ├── scripts/
+│   └── build-realm.py
 ├── docs/
 ├── integration/
 ├── docker-compose.yml
 └── .env.example
 ```
+
+`config/aru-realm.json` adalah file generated dan tidak disimpan di Git. File tersebut dibuat otomatis oleh `scripts/build-realm.py` saat deployment.
+
+## Aplikasi OIDC awal
+
+- SIAP ARU
+- ARU Ticketing
+- Meet ARU
+- QRSign
+- ARU Link
+- VHC
+
+Daftar aplikasi dan origin dikelola di `scripts/build-realm.py`.
 
 ## Deploy di VPS
 
@@ -42,7 +55,6 @@ Direkomendasikan di `/opt/apps/aru-auth`.
 sudo mkdir -p /opt/apps/aru-auth
 sudo chown -R $USER:$USER /opt/apps/aru-auth
 cd /opt/apps/aru-auth
-# clone repo ARU_Auth setelah repository dibuat
 ./scripts/generate-env.sh
 ./scripts/deploy.sh
 ```
@@ -53,7 +65,7 @@ Keycloak hanya bind ke `127.0.0.1:8180`, sehingga port 8180 tidak perlu dibuka d
 
 1. Tambahkan web domain `auth.aruraharja.co.id` pada user Hestia `aru`.
 2. Aktifkan SSL/Let's Encrypt setelah DNS menunjuk VPS.
-3. Jadikan domain tersebut reverse proxy ke `http://127.0.0.1:8180` menggunakan header X-Forwarded yang ada pada folder `nginx/`.
+3. Jadikan domain tersebut reverse proxy ke `http://127.0.0.1:8180` menggunakan contoh konfigurasi pada folder `nginx/`.
 4. Jalankan `nginx -t` sebelum reload.
 
 ## First login admin
@@ -63,8 +75,7 @@ Username admin bootstrap berasal dari `.env` (`KC_BOOTSTRAP_ADMIN_USERNAME`). Pa
 Admin console:
 `https://auth.aruraharja.co.id/admin/`
 
-Realm aplikasi:
-`aru`
+Realm aplikasi: `aru`
 
 ## Registration workflow
 
@@ -120,7 +131,6 @@ Urutan aman:
 4. Setelah stabil, lanjut Ticketing, QRSign, VHC, kemudian SIAP.
 5. Login lokal existing tetap dipertahankan selama transisi.
 
+## GitHub → VPS
 
-## CI/CD GitHub → VPS
-
-Workflow tersedia di `.github/workflows/deploy.yml`. Panduan secret dan deployment ada di `docs/DEPLOY_VPS.md`.
+Workflow tersedia di `.github/workflows/deploy.yml` dan saat ini menggunakan **manual workflow dispatch** agar tidak mencoba deployment sebelum secret VPS tersedia. Panduan secret dan deployment ada di `docs/DEPLOY_VPS.md`.
