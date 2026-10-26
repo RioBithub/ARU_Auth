@@ -22,6 +22,7 @@ CLAIMS = [
     "position",
     "employment_status",
     "work_location",
+    "work_location_other",
     "phone_number",
 ]
 
