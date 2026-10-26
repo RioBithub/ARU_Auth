@@ -1,130 +1,158 @@
 :root {
+  --aru-cyan: #25c7e8;
   --aru-blue: #07549a;
   --aru-blue-2: #0b72c6;
-  --aru-navy: #082b4d;
+  --aru-navy: #0b2c68;
+  --aru-navy-2: #071e49;
   --aru-ink: #102235;
-  --aru-muted: #65778a;
-  --aru-line: #d9e5ef;
-  --aru-surface: rgba(255,255,255,.98);
+  --aru-muted: #66788a;
+  --aru-line: #dce7ef;
+  --aru-soft: #f6faff;
 }
 
+* { box-sizing: border-box; }
 html, body { min-height: 100%; }
 body, .pf-v5-c-login {
+  min-height: 100vh !important;
   background:
-    radial-gradient(circle at 12% 10%, rgba(36,201,236,.18), transparent 30rem),
-    radial-gradient(circle at 88% 88%, rgba(13,47,112,.10), transparent 34rem),
-    linear-gradient(145deg, #f7fbff 0%, #edf6fd 50%, #ffffff 100%) !important;
+    radial-gradient(circle at 8% 8%, rgba(37,199,232,.22), transparent 30rem),
+    radial-gradient(circle at 92% 88%, rgba(11,44,104,.12), transparent 36rem),
+    linear-gradient(145deg, #f7fbff 0%, #edf6fd 48%, #fff 100%) !important;
   color: var(--aru-ink) !important;
 }
 
-/* Paksa layout Keycloak menjadi satu kolom: brand di atas, form di bawah */
-.pf-v5-c-login__container {
+.pf-v5-c-login {
   display: flex !important;
-  flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  grid-template-columns: 1fr !important;
-  grid-template-areas: none !important;
-  width: min(100% - 32px, 520px) !important;
-  max-width: 520px !important;
-  margin: 0 auto !important;
+  padding: 28px !important;
+}
+
+/* Desktop: brand panel + auth panel */
+.pf-v5-c-login__container {
+  display: grid !important;
+  grid-template-columns: minmax(310px, .85fr) minmax(430px, 1.15fr) !important;
+  grid-template-areas: "header main" !important;
+  width: min(100%, 940px) !important;
+  max-width: 940px !important;
+  margin: auto !important;
+  gap: 0 !important;
+  filter: drop-shadow(0 26px 54px rgba(8,43,77,.15));
 }
 
 .pf-v5-c-login__header,
 #kc-header {
-  grid-area: auto !important;
+  grid-area: header !important;
+  min-height: 610px !important;
   width: 100% !important;
-  margin: 0 0 18px !important;
-  padding: 0 !important;
-  text-align: center !important;
+  margin: 0 !important;
+  padding: 48px 40px !important;
+  border-radius: 30px 0 0 30px !important;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(37,199,232,.28), transparent 18rem),
+    linear-gradient(155deg, var(--aru-navy) 0%, var(--aru-navy-2) 100%) !important;
+  overflow: hidden !important;
+  text-align: left !important;
+  position: relative !important;
+}
+
+.pf-v5-c-login__header::after {
+  content: "Satu identitas untuk seluruh layanan internal PT Aru Raharja. Aman, terintegrasi, dan mudah digunakan.";
+  position: absolute;
+  left: 40px;
+  right: 40px;
+  bottom: 44px;
+  color: rgba(255,255,255,.78);
+  font-size: 14px;
+  line-height: 1.65;
 }
 
 #kc-header-wrapper {
   display: flex !important;
   flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
+  align-items: flex-start !important;
   width: 100% !important;
-  color: var(--aru-navy) !important;
-  font-size: 0 !important;
   padding: 0 !important;
+  color: #fff !important;
+  font-size: 0 !important;
 }
 
 #kc-header-wrapper::before {
   content: "";
   display: block;
-  width: 112px;
-  height: 92px;
-  margin: 0 auto 8px;
-  background: url("../img/aru.svg") center / contain no-repeat;
-  filter: drop-shadow(0 8px 18px rgba(8,43,77,.10));
+  width: 138px;
+  height: 128px;
+  margin: -4px 0 24px !important;
+  background: url("../img/aru-logo.png") left center / contain no-repeat !important;
+  filter: drop-shadow(0 10px 22px rgba(0,0,0,.12));
 }
 
 #kc-header-wrapper::after {
-  content: "PT ARU RAHARJA  •  ARU ACCOUNT";
+  content: "ARU Account";
   display: block;
-  color: var(--aru-navy);
-  font-size: 13px;
+  white-space: pre-line;
+  color: #fff;
+  font-size: 36px;
   font-weight: 800;
-  letter-spacing: .12em;
-  text-transform: uppercase;
+  line-height: 1.05;
+  letter-spacing: -.04em;
 }
 
 .pf-v5-c-login__main {
-  grid-area: auto !important;
+  grid-area: main !important;
   width: 100% !important;
-  min-height: 0 !important;
-  height: auto !important;
-  background: var(--aru-surface) !important;
+  min-height: 610px !important;
+  max-height: calc(100vh - 56px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  background: rgba(255,255,255,.985) !important;
   color: var(--aru-ink) !important;
-  border-radius: 26px !important;
-  border: 1px solid rgba(7,84,154,.10) !important;
-  box-shadow: 0 24px 70px rgba(8,43,77,.13) !important;
-  overflow: hidden !important;
+  border: 1px solid rgba(7,84,154,.08) !important;
+  border-left: 0 !important;
+  border-radius: 0 30px 30px 0 !important;
+  box-shadow: none !important;
+  overflow-y: auto !important;
 }
+
+.pf-v5-c-login__main-body { padding: 40px 44px 28px !important; }
+.pf-v5-c-login__main-footer { padding: 0 44px 34px !important; }
 
 .pf-v5-c-login__main-header {
   display: flex !important;
   flex-direction: column !important;
   align-items: stretch !important;
-  gap: 12px !important;
+  gap: 10px !important;
 }
 
 #kc-locale {
   order: -1 !important;
   align-self: flex-end !important;
   float: none !important;
-  width: 142px !important;
-  margin: 0 0 4px auto !important;
+  width: 132px !important;
+  margin: 0 0 8px auto !important;
 }
-
 #kc-locale select,
 #kc-locale .pf-v5-c-menu-toggle,
 #kc-locale .pf-v5-c-select__toggle {
-  min-height: 38px !important;
-  height: 38px !important;
+  min-height: 36px !important;
+  height: 36px !important;
   border-radius: 10px !important;
   background: #f8fbfd !important;
   border: 1px solid var(--aru-line) !important;
   color: var(--aru-ink) !important;
 }
 
-.pf-v5-c-login__main-body { padding: 30px 34px 24px !important; }
-.pf-v5-c-login__main-footer { padding: 0 34px 28px !important; }
-
 #kc-page-title {
   color: var(--aru-navy) !important;
-  font-size: clamp(28px, 4vw, 34px) !important;
+  font-size: clamp(29px, 3vw, 36px) !important;
   font-weight: 800 !important;
-  letter-spacing: -.035em !important;
+  letter-spacing: -.04em !important;
   line-height: 1.12 !important;
-  margin: 0 0 22px !important;
+  margin: 0 0 24px !important;
 }
-
 #kc-page-title::after {
-  content: "Satu akun untuk seluruh layanan internal PT Aru Raharja";
+  content: "Gunakan akun ARU atau Google untuk melanjutkan.";
   display: block;
-  max-width: 390px;
   margin-top: 9px;
   color: var(--aru-muted);
   font-size: 13px;
@@ -141,104 +169,133 @@ label, .pf-v5-c-form__label-text {
 .pf-v5-c-form-control,
 input[type="text"], input[type="email"], input[type="password"], input[type="tel"], select, textarea {
   min-height: 48px !important;
-  background: #f8fbfd !important;
+  background: var(--aru-soft) !important;
   color: var(--aru-ink) !important;
   border: 1px solid var(--aru-line) !important;
   border-radius: 12px !important;
   box-shadow: none !important;
   padding-inline: 14px !important;
 }
-
 .pf-v5-c-form-control:focus,
 input:focus, select:focus, textarea:focus {
-  border-color: #61a9df !important;
-  box-shadow: 0 0 0 3px rgba(11,114,198,.12) !important;
+  border-color: #5bb1df !important;
+  box-shadow: 0 0 0 3px rgba(37,199,232,.14) !important;
   outline: none !important;
 }
 
 .pf-v5-c-button.pf-m-primary, #kc-login, input[type="submit"] {
   min-height: 50px !important;
-  width: 100%;
-  background: linear-gradient(135deg, #0d2f70, var(--aru-blue-2)) !important;
+  width: 100% !important;
+  background: linear-gradient(135deg, var(--aru-navy), var(--aru-blue-2)) !important;
   color: #fff !important;
   border: 0 !important;
   border-radius: 12px !important;
-  box-shadow: 0 10px 24px rgba(7,84,154,.18) !important;
+  box-shadow: 0 10px 22px rgba(7,84,154,.18) !important;
   font-weight: 800 !important;
 }
-
 .pf-v5-c-button.pf-m-primary:hover, #kc-login:hover, input[type="submit"]:hover {
-  filter: brightness(.97);
+  transform: translateY(-1px);
+  filter: brightness(.98);
 }
 
 a { color: var(--aru-blue) !important; font-weight: 650; }
 
-#kc-info, #kc-info-wrapper {
-  background: transparent !important;
-  border: 0 !important;
+/* Google / social login */
+#kc-social-providers {
+  margin-top: 26px !important;
+  padding-top: 22px !important;
+  border-top: 1px solid #e8eef4 !important;
 }
+#kc-social-providers ul,
+.kc-social-links { list-style: none !important; padding: 0 !important; margin: 0 !important; }
+#kc-social-providers a,
+.kc-social-item,
+a[id^="social-"] {
+  min-height: 50px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 10px !important;
+  width: 100% !important;
+  border: 1px solid var(--aru-line) !important;
+  border-radius: 12px !important;
+  background: #fff !important;
+  color: #24384c !important;
+  box-shadow: 0 6px 18px rgba(8,43,77,.06) !important;
+  font-weight: 750 !important;
+  text-decoration: none !important;
+}
+#kc-social-providers a:hover,
+.kc-social-item:hover { background: #f9fcff !important; border-color: #bfd8e8 !important; }
 
+#kc-info, #kc-info-wrapper { background: transparent !important; border: 0 !important; }
 #kc-info-wrapper {
   color: var(--aru-muted) !important;
-  text-align: center;
+  text-align: center !important;
   padding: 18px 0 0 !important;
 }
-
 #kc-registration-container {
-  border-top: 1px solid #e8eef4;
-  padding-top: 17px;
+  border-top: 1px solid #e8eef4 !important;
+  padding-top: 18px !important;
 }
-
-/* Subtitle sudah ada di bawah judul, jangan duplikasi lagi di footer */
 #kc-registration-container::before { content: none !important; }
 
 .pf-v5-c-alert { border-radius: 12px !important; }
-.pf-v5-c-form__helper-text, .pf-v5-c-helper-text, .instruction { color: var(--aru-muted) !important; }
-
-/* Form registrasi */
-#kc-register-form .pf-v5-c-form__group,
-#kc-register-form .kc-form-group {
-  margin-bottom: 18px !important;
-  scroll-margin-top: 20px;
+.pf-v5-c-form__helper-text, .pf-v5-c-helper-text, .instruction {
+  color: var(--aru-muted) !important;
+  line-height: 1.5 !important;
 }
 
+/* Profil / registrasi */
+#kc-register-form .pf-v5-c-form__group,
+#kc-register-form .kc-form-group { margin-bottom: 17px !important; }
 #kc-register-form h2,
 #kc-register-form h3,
 .pf-v5-c-form__section-title {
   color: var(--aru-navy) !important;
   font-weight: 800 !important;
+  padding-top: 8px !important;
 }
+.aru-hidden { display: none !important; }
 
-@media (max-width: 600px) {
+/* scrollbar tipis untuk form registrasi panjang */
+.pf-v5-c-login__main::-webkit-scrollbar { width: 8px; }
+.pf-v5-c-login__main::-webkit-scrollbar-thumb { background: #cddce8; border-radius: 999px; }
+
+@media (max-width: 780px) {
+  .pf-v5-c-login { padding: 14px !important; align-items: flex-start !important; }
   .pf-v5-c-login__container {
-    width: min(100% - 22px, 520px) !important;
-    padding-top: 18px !important;
+    grid-template-columns: 1fr !important;
+    grid-template-areas: "header" "main" !important;
+    width: min(100%, 540px) !important;
+    filter: drop-shadow(0 20px 42px rgba(8,43,77,.13));
   }
-
+  .pf-v5-c-login__header,
+  #kc-header {
+    min-height: 0 !important;
+    padding: 24px 24px 22px !important;
+    border-radius: 22px 22px 0 0 !important;
+    text-align: center !important;
+  }
+  .pf-v5-c-login__header::after { display: none !important; }
+  #kc-header-wrapper { align-items: center !important; }
   #kc-header-wrapper::before {
-    width: 88px;
-    height: 72px;
-    margin-bottom: 6px;
+    width: 82px !important;
+    height: 76px !important;
+    margin: 0 auto 7px !important;
+    background-position: center !important;
   }
-
-  #kc-header-wrapper::after {
-    font-size: 11px;
-    letter-spacing: .08em;
+  #kc-header-wrapper::after { font-size: 24px !important; }
+  .pf-v5-c-login__main {
+    min-height: 0 !important;
+    max-height: none !important;
+    border-left: 1px solid rgba(7,84,154,.08) !important;
+    border-top: 0 !important;
+    border-radius: 0 0 22px 22px !important;
+    overflow: visible !important;
   }
-
-  .pf-v5-c-login__main { border-radius: 20px !important; }
-  .pf-v5-c-login__main-body { padding: 24px 21px 20px !important; }
-  .pf-v5-c-login__main-footer { padding: 0 21px 22px !important; }
-
-  #kc-locale {
-    width: 128px !important;
-    margin-bottom: 2px !important;
-  }
-
-  #kc-page-title {
-    font-size: 28px !important;
-    margin-bottom: 20px !important;
-  }
-
-  #kc-page-title::after { font-size: 12.5px; }
+  .pf-v5-c-login__main-body { padding: 25px 22px 20px !important; }
+  .pf-v5-c-login__main-footer { padding: 0 22px 24px !important; }
+  #kc-locale { width: 124px !important; }
+  #kc-page-title { font-size: 28px !important; margin-bottom: 20px !important; }
 }
