@@ -11,8 +11,17 @@ set +a
 GOOGLE_CLIENT_ID="${GOOGLE_CLIENT_ID:-${1:-}}"
 GOOGLE_CLIENT_SECRET="${GOOGLE_CLIENT_SECRET:-${2:-}}"
 
-[[ -n "$GOOGLE_CLIENT_ID" ]] || { echo "Set GOOGLE_CLIENT_ID atau argumen pertama."; exit 1; }
-[[ -n "$GOOGLE_CLIENT_SECRET" ]] || { echo "Set GOOGLE_CLIENT_SECRET atau argumen kedua."; exit 1; }
+if [[ -z "$GOOGLE_CLIENT_ID" ]]; then
+  read -r -p "Google OAuth Client ID: " GOOGLE_CLIENT_ID
+fi
+
+if [[ -z "$GOOGLE_CLIENT_SECRET" ]]; then
+  read -r -s -p "Google OAuth Client Secret: " GOOGLE_CLIENT_SECRET
+  echo
+fi
+
+[[ -n "$GOOGLE_CLIENT_ID" ]] || { echo "Google Client ID wajib diisi."; exit 1; }
+[[ -n "$GOOGLE_CLIENT_SECRET" ]] || { echo "Google Client Secret wajib diisi."; exit 1; }
 
 KC_CONTAINER="aru-auth-keycloak"
 KCADM="/opt/keycloak/bin/kcadm.sh"
@@ -53,6 +62,8 @@ else
   echo "Membuat Google IdP..."
   docker exec "$KC_CONTAINER" "$KCADM" create identity-provider/instances "${COMMON_ARGS[@]}" >/dev/null
 fi
+
+unset GOOGLE_CLIENT_SECRET
 
 echo
 echo "Google login aktif untuk realm ARU."
