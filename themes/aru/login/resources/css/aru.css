@@ -1,0 +1,60 @@
+:root {
+  --aru-blue: #0a4d8c;
+  --aru-blue-dark: #073a69;
+  --aru-sky: #eaf5ff;
+  --aru-ink: #142033;
+  --aru-muted: #64748b;
+}
+
+body, .pf-v5-c-login {
+  background:
+    radial-gradient(circle at 15% 10%, rgba(53, 157, 255, .20), transparent 32%),
+    linear-gradient(135deg, #f8fbff 0%, #eaf5ff 48%, #f8fbff 100%) !important;
+}
+
+.pf-v5-c-login__container { max-width: 540px; }
+.pf-v5-c-card, #kc-form-wrapper {
+  border-radius: 22px !important;
+}
+
+.pf-v5-c-login__main {
+  border-radius: 22px !important;
+  overflow: hidden;
+  box-shadow: 0 22px 70px rgba(10, 77, 140, .16) !important;
+  border: 1px solid rgba(10, 77, 140, .10);
+}
+
+#kc-header-wrapper {
+  color: var(--aru-blue-dark) !important;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+
+.pf-v5-c-button.pf-m-primary,
+#kc-login,
+input[type="submit"] {
+  background: linear-gradient(135deg, var(--aru-blue), #1677c8) !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  font-weight: 700;
+}
+
+.pf-v5-c-form-control,
+input, select, textarea {
+  border-radius: 10px !important;
+}
+
+a { color: var(--aru-blue) !important; }
+
+#kc-info-wrapper {
+  background: #f8fbff !important;
+  color: var(--aru-muted) !important;
+}
+
+#kc-registration-container::before {
+  content: "Satu akun untuk layanan internal PT Aru Raharja";
+  display: block;
+  color: var(--aru-muted);
+  font-size: .875rem;
+  margin-bottom: .75rem;
+}
