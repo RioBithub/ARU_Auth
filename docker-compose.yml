@@ -43,8 +43,16 @@ services:
     ports:
       - "127.0.0.1:8180:8080"
     volumes:
-      - ./config/aru-realm.json:/opt/keycloak/data/import/aru-realm.json:ro
-      - ./themes/aru:/opt/keycloak/themes/aru:ro
+      - type: bind
+        source: ./config/aru-realm.json
+        target: /opt/keycloak/data/import/aru-realm.json
+        read_only: true
+        bind:
+          create_host_path: false
+      - type: bind
+        source: ./themes/aru
+        target: /opt/keycloak/themes/aru
+        read_only: true
     networks:
       - aru_auth_internal
 
