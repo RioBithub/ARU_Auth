@@ -40,6 +40,7 @@ jobs:
             --exclude '.github/' \
             --exclude '.env' \
             --exclude 'backups/' \
+            --exclude 'config/aru-realm.json' \
             ./ "$VPS_USER@$VPS_HOST:/opt/apps/aru-auth/"
 
       - name: Deploy containers
@@ -51,9 +52,6 @@ jobs:
           ssh "$VPS_USER@$VPS_HOST" <<'REMOTE'
             set -euo pipefail
             cd /opt/apps/aru-auth
-            chmod +x scripts/*.sh
-            [[ -f .env ]] || ./scripts/generate-env.sh
-            docker compose pull
-            docker compose up -d
-            docker compose ps
+            chmod +x scripts/*.sh scripts/*.py
+            ./scripts/deploy.sh
           REMOTE
