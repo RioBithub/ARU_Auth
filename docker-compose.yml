@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: aru-auth-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${KC_DB_DATABASE}
+      POSTGRES_USER: ${KC_DB_USERNAME}
+      POSTGRES_PASSWORD: ${KC_DB_PASSWORD}
+    volumes:
+      - aru_auth_postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${KC_DB_USERNAME} -d ${KC_DB_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - aru_auth_internal
+
+  keycloak:
+    image: quay.io/keycloak/keycloak:26.8.1
+    container_name: aru-auth-keycloak
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["start", "--import-realm"]
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: ${KC_DB_DATABASE}
+      KC_DB_USERNAME: ${KC_DB_USERNAME}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      KC_HOSTNAME: ${KC_HOSTNAME}
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY_HEADERS: xforwarded
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+      KC_CACHE: local
+      JAVA_OPTS_APPEND: "-Xms256m -Xmx768m"
+    ports:
+      - "127.0.0.1:8180:8080"
+    volumes:
+      - ./config/aru-realm.json:/opt/keycloak/data/import/aru-realm.json:ro
+      - ./themes/aru:/opt/keycloak/themes/aru:ro
+    networks:
+      - aru_auth_internal
+
+volumes:
+  aru_auth_postgres:
+
+networks:
+  aru_auth_internal:
+    driver: bridge
