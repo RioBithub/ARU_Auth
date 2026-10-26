@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json
+import shutil
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -118,6 +119,10 @@ def main() -> None:
             ]
         },
     }
+
+    OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    if OUTPUT_PATH.is_dir():
+        shutil.rmtree(OUTPUT_PATH)
 
     OUTPUT_PATH.write_text(
         json.dumps(realm, ensure_ascii=False, indent=2) + "\n",
