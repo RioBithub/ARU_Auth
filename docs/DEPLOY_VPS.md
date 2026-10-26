@@ -6,6 +6,7 @@ Target production: `/opt/apps/aru-auth`
 
 - Ubuntu VPS
 - Docker Engine + Docker Compose plugin
+- Python 3
 - user deployment memiliki akses menjalankan Docker
 - Nginx/HestiaCP menangani HTTPS di port 443
 - port Keycloak tidak dibuka publik; container bind ke `127.0.0.1:8180`
@@ -22,17 +23,19 @@ Workflow **tidak** menyimpan `.env` di GitHub. Saat deploy pertama, VPS membuat 
 
 ## 3. Deploy
 
-Push ke branch `main` akan menjalankan `.github/workflows/deploy.yml`.
+Workflow production dijalankan manual dari **Actions > Deploy ARU Auth > Run workflow** setelah tiga secret VPS tersedia.
 
 Workflow melakukan:
 
 1. checkout repo;
-2. SSH ke VPS;
-3. rsync source ke `/opt/apps/aru-auth`;
-4. mempertahankan `.env` dan `backups/` di server;
-5. `docker compose pull`;
-6. `docker compose up -d`;
-7. menampilkan status container.
+2. validasi secret deployment;
+3. SSH ke VPS;
+4. rsync source ke `/opt/apps/aru-auth`;
+5. mempertahankan `.env` dan `backups/` di server;
+6. generate `config/aru-realm.json` dari source;
+7. `docker compose pull`;
+8. `docker compose up -d`;
+9. menampilkan status container.
 
 ## 4. Cloudflare
 
@@ -61,4 +64,4 @@ cd /opt/apps/aru-auth
 ./scripts/backup.sh
 ```
 
-Kemudian checkout/tag commit sebelumnya dan jalankan kembali `docker compose up -d`.
+Kemudian checkout/tag commit sebelumnya dan jalankan kembali `./scripts/deploy.sh`.
