@@ -202,31 +202,133 @@ a { color: var(--aru-blue) !important; font-weight: 650; }
 
 /* Google / social login */
 #kc-social-providers {
-  margin-top: 26px !important;
-  padding-top: 22px !important;
-  border-top: 1px solid #e8eef4 !important;
+  margin-top: 24px !important;
+  padding-top: 0 !important;
+  border-top: 0 !important;
 }
+
+#kc-social-providers h2,
+#kc-social-providers .kc-social-section-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  margin: 0 0 14px !important;
+  color: var(--aru-muted) !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  text-align: center !important;
+  text-transform: lowercase !important;
+}
+#kc-social-providers h2::before,
+#kc-social-providers h2::after,
+#kc-social-providers .kc-social-section-title::before,
+#kc-social-providers .kc-social-section-title::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: #e4edf4;
+}
+
 #kc-social-providers ul,
-.kc-social-links { list-style: none !important; padding: 0 !important; margin: 0 !important; }
+.kc-social-links {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+#kc-social-providers li {
+  width: 100% !important;
+  margin: 0 !important;
+}
+
 #kc-social-providers a,
 .kc-social-item,
 a[id^="social-"] {
   min-height: 50px !important;
+  height: 50px !important;
   display: flex !important;
+  flex-direction: row !important;
   align-items: center !important;
   justify-content: center !important;
   gap: 10px !important;
   width: 100% !important;
+  padding: 0 16px !important;
+  overflow: hidden !important;
   border: 1px solid var(--aru-line) !important;
   border-radius: 12px !important;
   background: #fff !important;
   color: #24384c !important;
   box-shadow: 0 6px 18px rgba(8,43,77,.06) !important;
+  font-size: 14px !important;
   font-weight: 750 !important;
+  line-height: 1 !important;
   text-decoration: none !important;
 }
+
+/* Keycloak dapat merender logo social sebagai i/background, img atau svg. Batasi semuanya. */
+#kc-social-providers i,
+#kc-social-providers .kc-social-provider-logo,
+#kc-social-providers .kc-social-provider-logo-google,
+#kc-social-providers [class*="kcLogoIdP"],
+#kc-social-providers [class*="social-provider-logo"] {
+  display: inline-block !important;
+  flex: 0 0 20px !important;
+  width: 20px !important;
+  min-width: 20px !important;
+  max-width: 20px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  font-size: 18px !important;
+  line-height: 20px !important;
+  background-size: 20px 20px !important;
+  background-position: center !important;
+  background-repeat: no-repeat !important;
+  object-fit: contain !important;
+}
+
+#kc-social-providers img,
+#kc-social-providers svg,
+#kc-social-providers i img,
+#kc-social-providers i svg,
+#kc-social-providers .kc-social-provider-logo img,
+#kc-social-providers .kc-social-provider-logo svg {
+  display: block !important;
+  flex: 0 0 20px !important;
+  width: 20px !important;
+  min-width: 20px !important;
+  max-width: 20px !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  max-height: 20px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  object-fit: contain !important;
+}
+
+#kc-social-providers .kc-social-icon-text,
+#kc-social-providers span:not(.pf-v5-c-button__icon) {
+  display: inline-block !important;
+  width: auto !important;
+  max-width: calc(100% - 34px) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  color: #24384c !important;
+  font-size: 14px !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
 #kc-social-providers a:hover,
-.kc-social-item:hover { background: #f9fcff !important; border-color: #bfd8e8 !important; }
+.kc-social-item:hover {
+  background: #f9fcff !important;
+  border-color: #bfd8e8 !important;
+  transform: translateY(-1px);
+}
 
 #kc-info, #kc-info-wrapper { background: transparent !important; border: 0 !important; }
 #kc-info-wrapper {
@@ -298,4 +400,27 @@ a[id^="social-"] {
   .pf-v5-c-login__main-footer { padding: 0 22px 24px !important; }
   #kc-locale { width: 124px !important; }
   #kc-page-title { font-size: 28px !important; margin-bottom: 20px !important; }
+
+  #kc-social-providers a,
+  .kc-social-item,
+  a[id^="social-"] {
+    min-height: 48px !important;
+    height: 48px !important;
+    padding: 0 14px !important;
+  }
+
+  #kc-social-providers i,
+  #kc-social-providers img,
+  #kc-social-providers svg,
+  #kc-social-providers .kc-social-provider-logo,
+  #kc-social-providers [class*="kcLogoIdP"] {
+    width: 18px !important;
+    min-width: 18px !important;
+    max-width: 18px !important;
+    height: 18px !important;
+    min-height: 18px !important;
+    max-height: 18px !important;
+    flex-basis: 18px !important;
+    background-size: 18px 18px !important;
+  }
 }
